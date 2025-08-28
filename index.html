@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background: linear-gradient(135deg, #ffe6f7, #e6f0ff);
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+        text-align: center;
+        transition: background 1s;
+      }
+
+      h1,
+      h2,
+      p,
+      #finalMsg {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        margin: 10px 5vw;
+      }
+
+      h1 {
+        font-size: 8vw;
+        color: #ff4da6;
+      }
+      h2 {
+        font-size: 5.5vw;
+        color: #7b2cbf;
+      }
+      p {
+        font-size: 4vw;
+        color: #444;
+      }
+
+      .heart {
+        position: absolute;
+        width: 5vw;
+        height: 5vw;
+        background: pink;
+        transform: rotate(45deg);
+        animation: float 6s infinite ease-in;
+      }
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 5vw;
+        height: 5vw;
+        background: pink;
+        border-radius: 50%;
+      }
+      .heart::before {
+        top: -2.5vw;
+        left: 0;
+      }
+      .heart::after {
+        left: -2.5vw;
+        top: 0;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(45deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-120vh) rotate(45deg);
+          opacity: 0;
+        }
+      }
+
+      /* Buttons */
+      #revealBtn,
+      #yesBtn,
+      #noBtn {
+        padding: 4vw 8vw;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 4vw;
+        margin: 2vw;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, background 0.3s;
+      }
+      #revealBtn {
+        background: #ff4da6;
+        color: white;
+      }
+      #revealBtn:hover {
+        background: #ff1a8c;
+        transform: scale(1.1);
+      }
+      #yesBtn {
+        background: #4caf50;
+        color: white;
+      }
+      #yesBtn:hover {
+        background: #45a049;
+        transform: scale(1.05);
+      }
+      #noBtn {
+        background: #ccc;
+        color: #888;
+        text-decoration: line-through;
+        cursor: not-allowed;
+      }
+
+      /* Button container */
+      #btnContainer {
+        display: flex;
+        gap: 5vw;
+        justify-content: center;
+        margin-top: 5vw;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      #finalMsg {
+        color: white;
+        font-size: 8vw;
+        font-weight: bold;
+        padding: 0 5vw;
+      }
+
+      /* Small screen tweaks */
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 10vw;
+        }
+        h2 {
+          font-size: 6.5vw;
+        }
+        p {
+          font-size: 5vw;
+        }
+        #revealBtn,
+        #yesBtn,
+        #noBtn {
+          font-size: 5vw;
+          padding: 5vw 10vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="revealBtn">Kripaya Button Dabaiyye</button>
+
+    <h1 id="msg1">Hello Anees ji</h1>
+    <h2 id="msg2">Ajeeb hai yeh par mera style hai propose karne ka</h2>
+    <p id="msg3">
+      Yeh mai apne dil se keh rahi hu jo bhi hai ki... <b>I Love You 🥰</b
+      ><br />
+      Kya tum mere banoge? Aj abhi isi wakt
+    </p>
+
+    <!-- Yes/No Buttons -->
+    <div id="btnContainer">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No ❌</button>
+    </div>
+
+    <!-- Final Message -->
+    <div id="finalMsg"></div>
+
+    <script>
+      const btn = document.getElementById("revealBtn");
+      const msg1 = document.getElementById("msg1");
+      const msg2 = document.getElementById("msg2");
+      const msg3 = document.getElementById("msg3");
+      const btnContainer = document.getElementById("btnContainer");
+      const yesBtn = document.getElementById("yesBtn");
+      const finalMsg = document.getElementById("finalMsg");
+      let heartInterval;
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+
+      btn.addEventListener("click", () => {
+        msg1.style.opacity = "1";
+        setTimeout(() => (msg2.style.opacity = "1"), 1200);
+        setTimeout(() => (msg3.style.opacity = "1"), 5000);
+        heartInterval = setInterval(createHeart, 400);
+        btn.style.display = "none";
+        setTimeout(() => (btnContainer.style.opacity = "1"), 6000);
+      });
+
+      yesBtn.addEventListener("click", () => {
+        clearInterval(heartInterval);
+        document.body.style.background = "black";
+        msg1.style.opacity = 0;
+        msg2.style.opacity = 0;
+        msg3.style.opacity = 0;
+        btnContainer.style.opacity = 0;
+        setTimeout(() => {
+          finalMsg.style.opacity = "1";
+          finalMsg.textContent = "Jao chat pe ab 😏💬";
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
